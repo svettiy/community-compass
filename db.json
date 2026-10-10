@@ -1,6 +1,38 @@
 {
   "businesses": [
     {
+      "id": 51,
+      "name": "Home Slice Pizza",
+      "category": "Food",
+      "subcategory": "Restaurants",
+      "description": "Illustrative pizza-shop listing to explore neighborhood discovery and cross-business promotions.",
+      "address": "Sample neighborhood · demo only",
+      "hours": "Illustrative hours: 11 AM–9 PM",
+      "phone": "",
+      "website": "",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Demo offer: save on a neighborhood pizza night"
+      ]
+    },
+    {
+      "id": 52,
+      "name": "Hair Cuttery",
+      "category": "Service",
+      "subcategory": "Hair Salons",
+      "description": "Illustrative salon listing showing how local services could participate in shared neighborhood discovery.",
+      "address": "Sample neighborhood · demo only",
+      "hours": "Illustrative hours: 9 AM–6 PM",
+      "phone": "",
+      "website": "",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Demo offer: a special salon visit promotion"
+      ]
+    },
+    {
       "id": 1,
       "name": "Sunrise Café",
       "category": "Food",
@@ -606,8 +638,8 @@
   ],
   "reviews": [],
   "meta": {
-    "dataset": "Fictional sample listings for a college portfolio prototype. Not real local businesses.",
+    "dataset": "Fictional illustrative listings for a college portfolio prototype. Named examples are not endorsements, affiliations, or actual business offers.",
     "updated": "2026-10-10",
-    "version": 2
+    "version": 3
   }
 }
