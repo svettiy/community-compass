@@ -12,8 +12,14 @@ const el = id => document.getElementById(id);
 export function refreshUI() {
   const filtered = filterData(data, el("searchInput").value, el("categoryFilter").value,
     el("subcategoryFilter").value, el("viewFilter").value);
+  const sortMode = el("sortFilter")?.value || "default";
+  if (sortMode === "rating") filtered.sort((a, b) => Number(b.rating || 0) - Number(a.rating || 0));
+  if (sortMode === "reviews") filtered.sort((a, b) => Number(b.reviewCount || 0) - Number(a.reviewCount || 0));
+  if (sortMode === "az") filtered.sort((a, b) => a.name.localeCompare(b.name));
   renderList(filtered, openReviewModal, refreshUI, openEditBusiness, openDeleteBusiness);
   el("resultsCount").textContent = `${filtered.length} of ${data.length} businesses`;
+  el("heroListingCount").textContent = data.length;
+  el("heroCategoryCount").textContent = new Set(data.map(b => b.category).filter(Boolean)).size;
 }
 async function reload({preserveFilters = true} = {}) {
   const category = preserveFilters ? el("categoryFilter").value : "all";
@@ -47,6 +53,10 @@ function openEditor(business = null) {
   el("adminBizDescription").value = business?.description || "";
   el("adminBizCategory").value = business?.category || "";
   el("adminBizSubcategory").value = business?.subcategory || "";
+  el("adminBizAddress").value = business?.address || "";
+  el("adminBizWebsite").value = business?.website || "";
+  el("adminBizPhone").value = business?.phone || "";
+  el("adminBizHours").value = business?.hours || "";
   el("adminDealsList").replaceChildren();
   (business?.deals?.length ? business.deals : [""]).forEach(addDealRow);
   window.bootstrap.Modal.getOrCreateInstance(el("adminBusinessModal")).show();
@@ -62,10 +72,18 @@ async function saveEditedBusiness() {
   const payload = {
     name: el("adminBizName").value.trim(), description: el("adminBizDescription").value.trim(),
     category: el("adminBizCategory").value.trim(), subcategory: el("adminBizSubcategory").value.trim(),
+    address: el("adminBizAddress").value.trim(), website: el("adminBizWebsite").value.trim(),
+    phone: el("adminBizPhone").value.trim(), hours: el("adminBizHours").value.trim(),
     deals: [...document.querySelectorAll(".admin-deal-input")].map(i => i.value.trim()).filter(Boolean)
   };
   if (!payload.name || !payload.description || !payload.category || !payload.subcategory) {
     alert("Complete name, description, category, and subcategory."); return;
+  }
+  if (payload.website) {
+    try {
+      const u = new URL(payload.website);
+      if (!["http:", "https:"].includes(u.protocol)) throw new Error("Invalid protocol");
+    } catch { alert("Enter a full website address beginning with https://, or leave it blank."); return; }
   }
   try {
     await saveBusiness(payload, editingBusiness?.id ?? null);
@@ -99,6 +117,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
   el("subcategoryFilter").addEventListener("change", refreshUI);
   el("viewFilter").addEventListener("change", refreshUI);
+  el("sortFilter").addEventListener("change", refreshUI);
+  el("ownerEditorBtn").addEventListener("click", () => {
+    window.isAdmin = true; updateEditorButtons(); openEditor();
+  });
   el("adminLoginBtn").addEventListener("click", () => { window.isAdmin = true; updateEditorButtons(); });
   el("adminLogoutBtn").addEventListener("click", () => { window.isAdmin = false; updateEditorButtons(); });
   el("adminPanelBtn").addEventListener("click", () => openEditor());

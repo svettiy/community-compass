@@ -64,3 +64,12 @@ GitHub Pages only serves static resources; to share newly posted reviews and bus
 ## Admissions presentation
 
 Use the published URL as the live prototype in the Michigan Ross artifact and link this repository as supporting source code. Clearly label the site as a prototype; do not claim public, permanent shared review/admin persistence.
+
+
+## Ross portfolio updates (October 2026)
+- Redesigned landing page and more compact demo-data disclaimer.
+- Rating, review-count and alphabetical sorting alongside category/subcategory filters.
+- Business cards display categories, offers, rating context, optional hours, phone and website links.
+- Demo Editor now includes address, website, phone and hours in addition to listing details and deals.
+- Two workflows: discovery for visitors; local listing maintenance for simulated business owners.
+- Public sample data remain fictional. New or edited listings and reviews remain **browser-local**, not published to GitHub or shared with other visitors.
