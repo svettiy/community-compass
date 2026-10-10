@@ -1,0 +1,32 @@
+{
+  "businesses": [
+    {
+      "id": 1,
+      "name": "Sunrise Caf\u00e9",
+      "category": "Food",
+      "subcategory": "Restaurants",
+      "description": "Cozy neighborhood caf\u00e9 serving breakfast, brunch, and specialty coffee.",
+      "address": "123 Maple St",
+      "rating": "4.2",
+      "reviewCount": 3,
+      "deals": [
+        "Buy 1 get 1 free latte Mondays",
+        "10% student discount"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Green Leaf Grocers",
+      "category": "Food",
+      "subcategory": "Groceries",
+      "description": "Organic groceries and healthy eating options.",
+      "address": "42 Oak Ave",
+      "rating": "4.4",
+      "reviewCount": 2,
+      "deals": [
+        "Local produce box discount"
+      ]
+    }
+  ],
+  "reviews": []
+}

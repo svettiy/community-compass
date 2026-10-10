@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Community Compass: interactive local-business discovery prototype">
+  <title>Community Compass</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body class="bg-light">
+  <nav class="navbar navbar-dark bg-primary mb-4">
+    <div class="container d-flex align-items-center">
+      <span class="navbar-brand me-auto">
+        <i class="bi bi-shop"></i> Community Compass
+      </span>
+      <span id="adminBadge" class="badge bg-warning text-dark d-none me-2">
+        <i class="bi bi-pencil-square"></i> Demo Editor ON
+      </span>
+      <button id="adminLoginBtn" class="btn btn-outline-light btn-sm">
+        <i class="bi bi-pencil-square"></i> Try Demo Editor
+      </button>
+      <button id="adminPanelBtn" class="btn btn-warning btn-sm ms-2 d-none">
+        <i class="bi bi-plus-circle"></i> Add Business
+      </button>
+      <button id="adminLogoutBtn" class="btn btn-outline-light btn-sm ms-2 d-none">
+        <i class="bi bi-box-arrow-right"></i> Exit Editor
+      </button>
+    </div>
+  </nav>
+
+  <div class="container mb-4">
+    <div class="alert alert-info small" role="status">
+      <strong>Interactive portfolio prototype:</strong> listings are loaded from <code>db.json</code>.
+      Reviews, favorites, and changes made in Demo Editor are saved <strong>only in this browser</strong>,
+      not shared with other visitors. This is not a live public review service.
+      <button type="button" id="resetDemoBtn" class="btn btn-sm btn-outline-primary ms-2">Reset local demo</button>
+    </div>
+    <div id="loadError" class="alert alert-danger d-none" role="alert"></div>
+
+    <div class="row g-3 mb-3">
+      <div class="col-md-3">
+        <label class="form-label fw-bold">Category</label>
+        <select id="categoryFilter" class="form-select"></select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label fw-bold">Subcategory</label>
+        <select id="subcategoryFilter" class="form-select">
+          <option value="all">All Subcategories</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label fw-bold">Search</label>
+        <input id="searchInput" class="form-control" placeholder="Search businesses..." />
+      </div>
+      <div class="col-md-3">
+        <label class="form-label fw-bold">Filter By</label>
+        <select id="viewFilter" class="form-select">
+          <option value="all">All</option>
+          <option value="favorites">Favorites</option>
+          <option value="deals">Special Deals</option>
+        </select>
+      </div>
+    </div>
+
+    <p id="resultsCount" class="small text-muted" aria-live="polite"></p>
+    <div id="businessList" class="row g-3"></div>
+  </div>
+
+  <!-- Review Modal -->
+  <div class="modal fade" id="reviewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            Reviews for <span id="modalBusinessName"></span>
+            <span class="badge bg-primary ms-2" id="reviewCount">0</span>
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+          <div id="reviewsList" class="mb-3" style="max-height: 300px; overflow-y:auto;"></div>
+
+          <hr/>
+          <h6>Add Review <small class="text-muted">(saved only in your browser)</small></h6>
+          <input id="reviewName" class="form-control mb-2" placeholder="Your name (optional)" />
+          <textarea id="reviewText" class="form-control mb-2" placeholder="Write your review..."></textarea>
+          <select id="reviewRating" class="form-select mb-2">
+            <option value="">Rating</option>
+            <option value="1">⭐ 1</option>
+            <option value="2">⭐ 2</option>
+            <option value="3">⭐ 3</option>
+            <option value="4">⭐ 4</option>
+            <option value="5">⭐ 5</option>
+          </select>
+
+          <div class="d-flex align-items-center mb-2">
+            <span id="captchaQuestion" class="me-2 fw-bold"></span>
+            <input id="captchaAnswer" class="form-control form-control-sm" style="width:80px" placeholder="?" />
+          </div>
+
+          <button id="submitReviewBtn" class="btn btn-primary btn-sm">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Business Modal -->
+  <div class="modal fade" id="adminBusinessModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content p-3">
+        <div class="modal-header pb-1">
+          <h5 id="adminBusinessModalTitle" class="modal-title">Demo Editor - Manage Business</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body pt-3">
+          <p class="small text-muted">Edits here affect only your own browser. No login or permanent shared database is used.</p>
+          <div class="mb-2">
+            <label class="form-label fw-bold">Business Name</label>
+            <input id="adminBizName" class="form-control" placeholder="Business Name" />
+          </div>
+          <div class="mb-2">
+            <label class="form-label fw-bold">Description</label>
+            <textarea id="adminBizDescription" class="form-control" placeholder="Business Description"></textarea>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-6">
+              <label class="form-label fw-bold">Category</label>
+              <input id="adminBizCategory" class="form-control" placeholder="e.g. Food, Retail, Service" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-bold">Subcategory</label>
+              <input id="adminBizSubcategory" class="form-control" placeholder="e.g. Restaurants, Groceries" />
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label fw-bold">Deals</label>
+            <div id="adminDealsList" class="mb-2"></div>
+            <button type="button" id="addDealBtn" class="btn btn-outline-success btn-sm">
+              + Add Deal
+            </button>
+          </div>
+
+          <div class="d-flex justify-content-end gap-2 mt-3">
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" id="saveBusinessBtn" class="btn btn-primary btn-sm">Save Business</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
