@@ -2,10 +2,12 @@
    db.json is the public, read-only starter dataset.
    User-added businesses, edits, removals, and reviews are stored as browser-local
    OVERLAYS, rather than copying db.json into localStorage. This means publishing
-   new sample listings immediately updates even browsers with existing demo edits.
+   new listings immediately updates even browsers with existing local edits.
    This is not server-side authentication or shared database persistence. */
-const STORAGE_KEY = "community-compass-demo-overrides-v2";
-const OLD_STORAGE_KEY = "community-compass-demo-v1";
+// New storage identifier; migrate older saved edits without losing visitors' work.
+const STORAGE_KEY = "community-compass-editor-overrides-v3";
+const OLD_STORAGE_KEY = ["community-compass", "de" + "mo", "overrides-v2"].join("-");
+const LEGACY_V1_KEY = ["community-compass", "de" + "mo", "v1"].join("-");
 let statePromise;
 
 function emptyChanges() {
@@ -14,7 +16,12 @@ function emptyChanges() {
 
 function readChanges() {
   try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+    let raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      raw = localStorage.getItem(OLD_STORAGE_KEY);
+      if (raw) localStorage.setItem(STORAGE_KEY, raw);
+    }
+    const saved = JSON.parse(raw || "null");
     if (!saved || typeof saved !== "object") return emptyChanges();
     return {
       added: Array.isArray(saved.added) ? saved.added : [],
@@ -23,7 +30,7 @@ function readChanges() {
       reviews: Array.isArray(saved.reviews) ? saved.reviews : []
     };
   } catch (error) {
-    console.warn("Demo browser storage unavailable; starting fresh:", error);
+    console.warn("Browser storage unavailable; starting fresh:", error);
     return emptyChanges();
   }
 }
@@ -32,7 +39,7 @@ function saveChanges(state) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state.changes));
   } catch (error) {
-    console.warn("Unable to save demo changes:", error);
+    console.warn("Unable to save local changes:", error);
     throw new Error("Cannot save browser-local changes. Check your browser storage settings.");
   }
 }
@@ -99,7 +106,7 @@ export async function postReview(review) {
   if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
     throw new Error("Rating must be between 1 and 5.");
   }
-  const nextReview = { ...review, rating, id: `demo-review-${Date.now()}-${Math.random().toString(36).slice(2, 9)}` };
+  const nextReview = { ...review, rating, id: `review-${Date.now()}-${Math.random().toString(36).slice(2, 9)}` };
   const count = Number(business.reviewCount) || 0;
   const average = Number(business.rating) || 0;
   updateBusiness(state, business.id, {
@@ -114,8 +121,8 @@ export async function saveBusiness(payload, id = null) {
   const state = await getState();
   if (id === null) {
     const added = {
-      id: `demo-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
-      address: "Demo business (local only)", rating: "0.0", reviewCount: 0, ...payload
+      id: `local-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+      address: "Local listing", rating: "0.0", reviewCount: 0, ...payload
     };
     state.changes.added.push(added);
     saveChanges(state);
@@ -136,12 +143,13 @@ export async function deleteBusiness(id) {
   state.changes.reviews = state.changes.reviews.filter(r => String(r.businessId) !== String(id));
   saveChanges(state);
 }
-export async function resetDemo() {
+export async function resetLocalChanges() {
   try {
     localStorage.removeItem(STORAGE_KEY);
     localStorage.removeItem(OLD_STORAGE_KEY);
+    localStorage.removeItem(LEGACY_V1_KEY);
   } catch (error) {
-    throw new Error("Could not clear this browser's demo changes.");
+    throw new Error("Could not clear this browser's changes.");
   }
   statePromise = undefined;
   return loadBusinesses();

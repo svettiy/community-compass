@@ -1,7 +1,7 @@
-import { loadBusinesses, saveBusiness, deleteBusiness, resetDemo } from "./api.js";
+import { loadBusinesses, saveBusiness, deleteBusiness, resetLocalChanges } from "./api.js?v=4";
 import { filterData } from "./filters.js";
-import { renderList } from "./ui.js";
-import { openReviewModal, setupReviewModal } from "./reviews.js";
+import { renderList } from "./ui.js?v=4";
+import { openReviewModal, setupReviewModal } from "./reviews.js?v=4";
 import { populateFilters, populateSubcategories } from "./categories.js";
 
 let data = [];
@@ -48,7 +48,7 @@ function openEditor(business = null) {
   if (!window.isAdmin) return;
   if (!window.bootstrap?.Modal) { alert("Editor requires Bootstrap to load. Please check your internet connection and refresh."); return; }
   editingBusiness = business;
-  el("adminBusinessModalTitle").textContent = business ? `Edit: ${business.name}` : "Add Business (local demo)";
+  el("adminBusinessModalTitle").textContent = business ? `Edit: ${business.name}` : "Add Business";
   el("adminBizName").value = business?.name || "";
   el("adminBizDescription").value = business?.description || "";
   el("adminBizCategory").value = business?.category || "";
@@ -63,9 +63,9 @@ function openEditor(business = null) {
 }
 function openEditBusiness(business) { openEditor(business); }
 async function openDeleteBusiness(business) {
-  if (!window.isAdmin || !confirm(`Delete "${business.name}" from this browser's demo?`)) return;
+  if (!window.isAdmin || !confirm(`Delete "${business.name}" from this browser?`)) return;
   try { await deleteBusiness(business.id); await reload();
-    el("editorStatus").textContent = `Deleted ${business.name} from this browser demo. Changes are not shared.`; }
+    el("editorStatus").textContent = `Deleted ${business.name} from this browser. Changes are not shared.`; }
   catch (error) { alert(error.message); }
 }
 async function saveEditedBusiness() {
@@ -98,7 +98,7 @@ function updateEditorButtons() {
   el("adminLogoutBtn").classList.toggle("d-none", !window.isAdmin);
   el("adminLoginBtn").classList.toggle("d-none", window.isAdmin);
   el("editorStatus").classList.toggle("d-none", !window.isAdmin);
-  if (window.isAdmin) el("editorStatus").innerHTML = "<strong>Demo Editor active.</strong> Select Edit or Delete on any card, or Add Business above. Your changes save only in this browser, not to the published db.json.";
+  if (window.isAdmin) el("editorStatus").innerHTML = "<strong>Editor active.</strong> Select Edit or Delete on any card, or Add Business above. Your changes save only in this browser, not to the published db.json.";
   refreshUI();
 }
 function showError(error) {
@@ -126,10 +126,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   el("adminPanelBtn").addEventListener("click", () => openEditor());
   el("addDealBtn").addEventListener("click", () => addDealRow());
   el("saveBusinessBtn").addEventListener("click", saveEditedBusiness);
-  el("resetDemoBtn").addEventListener("click", async () => {
-    if (!confirm("Reset local reviews and business edits to the original sample db.json?")) return;
-    try { await resetDemo(); await reload({preserveFilters:false}); el("searchInput").value = ""; el("viewFilter").value = "all"; refreshUI();
-      if (window.isAdmin) el("editorStatus").textContent = "Local changes reset to the current public db.json sample data."; }
+  el("resetLocalBtn").addEventListener("click", async () => {
+    if (!confirm("Reset local reviews and business edits to the published db.json?")) return;
+    try { await resetLocalChanges(); await reload({preserveFilters:false}); el("searchInput").value = ""; el("viewFilter").value = "all"; refreshUI();
+      if (window.isAdmin) el("editorStatus").textContent = "Local changes reset to the current published db.json data."; }
     catch (error) { alert(error.message); }
   });
 });

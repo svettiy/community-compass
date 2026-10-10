@@ -20,7 +20,7 @@
     .cc-stat { border-left:1px solid rgba(255,255,255,.24); padding-left:1.2rem; }
     .cc-stat strong { display:block; font-size:1.35rem; }
     .cc-stat small { color:#c4dce8; }
-    .cc-demo-note { color:#536678; font-size:.78rem; padding:1rem 0; line-height:1.55; }
+    .cc-info-note { color:#536678; font-size:.78rem; padding:1rem 0; line-height:1.55; }
     .cc-section-heading { letter-spacing:-.03em; font-weight:750; }
     .cc-step { background:#fff; border:1px solid #e2e9f0; border-radius:13px; padding:.8rem 1rem; min-height:88px; }
     .cc-step-label { color:#0f766e; font-size:.7rem; letter-spacing:.08em; font-weight:800; }
@@ -49,10 +49,10 @@
         <i class="bi bi-shop"></i> Community Compass
       </span>
       <span id="adminBadge" class="badge bg-warning text-dark d-none me-2">
-        <i class="bi bi-pencil-square"></i> Demo Editor ON
+        <i class="bi bi-pencil-square"></i> Editor ON
       </span>
       <button id="adminLoginBtn" class="btn btn-outline-light btn-sm">
-        <i class="bi bi-pencil-square"></i> Open Demo Editor
+        <i class="bi bi-pencil-square"></i> Open Editor
       </button>
       <button id="adminPanelBtn" class="btn btn-warning btn-sm ms-2 d-none">
         <i class="bi bi-plus-circle"></i> Add Business
@@ -73,7 +73,7 @@
         </div>
         <div class="col-md-4">
           <div class="row g-2">
-            <div class="col-6 cc-stat"><strong id="heroListingCount">—</strong><small>sample listings</small></div>
+            <div class="col-6 cc-stat"><strong id="heroListingCount">—</strong><small>business listings</small></div>
             <div class="col-6 cc-stat"><strong id="heroCategoryCount">—</strong><small>categories</small></div>
           </div>
         </div>
@@ -83,7 +83,7 @@
     <section class="mb-4" aria-label="How Community Compass works">
       <div class="row g-2">
         <div class="col-md-4"><div class="cc-step"><div class="cc-step-label">01 · DISCOVER</div><strong>Start with what you need</strong><p>Search by name or narrow the directory by category.</p></div></div>
-        <div class="col-md-4"><div class="cc-step"><div class="cc-step-label">02 · COMPARE</div><strong>Look beyond the listing</strong><p>Check sample ratings, offers, and written reviews.</p></div></div>
+        <div class="col-md-4"><div class="cc-step"><div class="cc-step-label">02 · COMPARE</div><strong>Look beyond the listing</strong><p>Compare ratings, offers, and written reviews.</p></div></div>
         <div class="col-md-4"><div class="cc-step"><div class="cc-step-label">03 · SAVE</div><strong>Remember a favorite</strong><p>Bookmark businesses in your own browser.</p></div></div>
       </div>
     </section>
@@ -93,7 +93,7 @@
         <span class="badge rounded-pill text-bg-light border">Interactive search</span>
       </div>
       <div id="loadError" class="alert alert-danger d-none" role="alert"></div>
-      <div id="editorStatus" class="alert alert-warning small d-none" role="status" aria-live="polite">Demo Editor is active. Edits stay in this browser.</div>
+      <div id="editorStatus" class="alert alert-warning small d-none" role="status" aria-live="polite">Editor is active. Edits stay in this browser.</div>
     <div class="row g-3 mb-3">
       <div class="col-md-3">
         <label class="form-label fw-bold">Category</label>
@@ -133,15 +133,15 @@
       </div>
     </section>
     <div id="businessList" class="row g-3"></div>
-    <div class="cc-demo-note mt-4 border-top" role="note">
-      <strong>About this prototype.</strong> Every business, address, deal and preloaded rating is fictional demonstration data. Public listings come from <code>db.json</code>.
-      Reviews, bookmarks, and changes made through <strong>Open Demo Editor</strong> stay in your browser; they do not update the public directory.
-      <button type="button" id="resetDemoBtn" class="btn btn-outline-secondary btn-sm ms-1 mt-1">Reset local demo</button>
+    <div class="cc-info-note mt-4 border-top" role="note">
+      <strong>About this prototype.</strong> Listings, addresses, offers, and preloaded ratings are illustrative content for this prototype, not verified business information or real promotions. Published listings come from <code>db.json</code>.
+      Reviews, bookmarks, and changes made through <strong>Open Editor</strong> stay in your browser; they do not update the public directory.
+      <button type="button" id="resetLocalBtn" class="btn btn-outline-secondary btn-sm ms-1 mt-1">Reset local changes</button>
     </div>
     <section class="cc-panel mt-3 mb-4" aria-label="Owner workflow">
       <div class="row align-items-center g-3">
-        <div class="col-md-9"><div class="cc-eyebrow" style="color:#0f766e">FOR BUSINESS OWNERS · PROTOTYPE</div><h2 class="h5 cc-section-heading mt-1 mb-1">A directory is only useful if its information stays current.</h2><p class="text-muted small mb-0">Try the Demo Editor to add a listing, correct details, and update offers. All edits are local to this browser; a production system would need authenticated accounts and a shared database.</p></div>
-        <div class="col-md-3 text-md-end"><button type="button" id="ownerEditorBtn" class="btn btn-outline-primary">Try the Demo Editor <i class="bi bi-arrow-right"></i></button></div>
+        <div class="col-md-9"><div class="cc-eyebrow" style="color:#0f766e">FOR BUSINESS OWNERS · PROTOTYPE</div><h2 class="h5 cc-section-heading mt-1 mb-1">A directory is only useful if its information stays current.</h2><p class="text-muted small mb-0">Try the Editor to add a listing, correct details, and update offers. All edits are local to this browser; a production system would need authenticated accounts and a shared database.</p></div>
+        <div class="col-md-3 text-md-end"><button type="button" id="ownerEditorBtn" class="btn btn-outline-primary">Try the Editor <i class="bi bi-arrow-right"></i></button></div>
       </div>
     </section>
   </main>
@@ -190,11 +190,11 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content p-3">
         <div class="modal-header pb-1">
-          <h5 id="adminBusinessModalTitle" class="modal-title">Demo Editor - Manage Business</h5>
+          <h5 id="adminBusinessModalTitle" class="modal-title">Editor - Manage Business</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body pt-3">
-          <p class="small text-muted">This is a local demonstration, not an authenticated admin console. Changes remain only in this browser. To change the public starter listings, edit db.json in GitHub.</p>
+          <p class="small text-muted">Editor changes remain only in this browser; this is not an authenticated owner account. To update the public directory, edit <code>db.json</code> in GitHub.</p>
           <div class="mb-2">
             <label class="form-label fw-bold">Business Name</label>
             <input id="adminBizName" class="form-control" placeholder="Business Name" />
@@ -238,6 +238,6 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script type="module" src="./js/main.js?v=2"></script>
+  <script type="module" src="./js/main.js?v=4"></script>
 </body>
 </html>

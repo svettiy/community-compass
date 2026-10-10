@@ -1,4 +1,4 @@
-import { loadReviews, postReview } from "./api.js";
+import { loadReviews, postReview } from "./api.js?v=4";
 
 let selectedBusiness = null;
 let captchaResult = null;
@@ -32,7 +32,7 @@ export async function loadReviewDisplay(businessId, page = 1, pageSize = 5) {
   if (!reviews.length) {
     const placeholder = document.createElement("p");
     placeholder.className = "small text-muted";
-    placeholder.textContent = "No written reviews are available yet. Some sample listings show historical summary ratings without review text.";
+    placeholder.textContent = "No written reviews are available yet. Some listings include illustrative summary ratings without written reviews.";
     container.append(placeholder);
   }
   const segment = reviews.slice((page - 1) * pageSize, page * pageSize);
@@ -78,7 +78,7 @@ export function setupReviewModal({onSaved = () => {}} = {}) {
       document.getElementById("reviewText").value = "";
       document.getElementById("reviewRating").value = "";
       captcha.value = ""; captchaResult = generateCaptcha();
-      alert("Demo review saved in this browser only.");
+      alert("Review saved in this browser only.");
     } catch (error) { alert(error.message || "Unable to save review."); }
   });
 }
