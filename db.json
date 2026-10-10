@@ -2,10 +2,10 @@
   "businesses": [
     {
       "id": 1,
-      "name": "Sunrise Caf\u00e9",
+      "name": "Sunrise Café",
       "category": "Food",
       "subcategory": "Restaurants",
-      "description": "Cozy neighborhood caf\u00e9 serving breakfast, brunch, and specialty coffee.",
+      "description": "Cozy neighborhood café serving breakfast, brunch, and specialty coffee.",
       "address": "123 Maple St",
       "rating": "4.2",
       "reviewCount": 3,
@@ -26,7 +26,588 @@
       "deals": [
         "Local produce box discount"
       ]
+    },
+    {
+      "id": 3,
+      "name": "Cedar & Stone Kitchen",
+      "category": "Food",
+      "subcategory": "Restaurants",
+      "description": "Seasonal comfort food, neighborhood dinners, and a rotating local menu.",
+      "address": "Maple District (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Family-style dinner special every Thursday."
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Corner Market Pantry",
+      "category": "Food",
+      "subcategory": "Groceries",
+      "description": "Everyday pantry staples, produce, and household essentials in one quick stop.",
+      "address": "Cedar Park (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Weekend fresh-produce bundle."
+      ]
+    },
+    {
+      "id": 5,
+      "name": "QuickBite Grill",
+      "category": "Food",
+      "subcategory": "Fast Food",
+      "description": "Made-to-order burgers, veggie wraps, and fast takeout for busy afternoons.",
+      "address": "West End (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Student combo meal on weekdays."
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Golden Taco Stop",
+      "category": "Food",
+      "subcategory": "Fast Food",
+      "description": "Tacos, rice bowls, and customizable quick meals with vegetarian options.",
+      "address": "Brookside (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 7,
+      "name": "Maple Street Coffee",
+      "category": "Food",
+      "subcategory": "Cafés",
+      "description": "Espresso drinks, iced teas, and a quiet place to study or meet friends.",
+      "address": "Market Square (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Free pastry with two large drinks on Tuesdays."
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Morning Bloom Café",
+      "category": "Food",
+      "subcategory": "Cafés",
+      "description": "Small-batch coffee, sandwiches, and light breakfast plates.",
+      "address": "Lakeside (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 9,
+      "name": "Oven & Orchard Bakery",
+      "category": "Food",
+      "subcategory": "Bakeries",
+      "description": "Fresh breads, fruit tarts, croissants, and rotating seasonal pastries.",
+      "address": "North Village (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Half-price day-old bread after 4 p.m."
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Sweet Rise Bakeshop",
+      "category": "Food",
+      "subcategory": "Bakeries",
+      "description": "Cupcakes, custom celebration cakes, and fresh cookies.",
+      "address": "Oak Commons (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 11,
+      "name": "Rolling Noodle Kitchen",
+      "category": "Food",
+      "subcategory": "Food Trucks",
+      "description": "Mobile noodle bowls and rice plates with customizable toppings.",
+      "address": "Maple District (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 12,
+      "name": "Street Bowl Express",
+      "category": "Food",
+      "subcategory": "Food Trucks",
+      "description": "A roaming lunch truck serving grain bowls, salads, and grilled proteins.",
+      "address": "Cedar Park (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Lunch bowl and drink combination."
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Honeycomb Ice Cream",
+      "category": "Food",
+      "subcategory": "Desserts",
+      "description": "Small-batch ice cream and dairy-free frozen treats.",
+      "address": "West End (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Two-scoop special on Wednesdays."
+      ]
+    },
+    {
+      "id": 14,
+      "name": "The Cookie Corner",
+      "category": "Food",
+      "subcategory": "Desserts",
+      "description": "Warm cookies, brownies, and cookie-decorating kits.",
+      "address": "Brookside (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 15,
+      "name": "Spice Route Market",
+      "category": "Food",
+      "subcategory": "Specialty Foods",
+      "description": "International spices, sauces, grains, and hard-to-find ingredients.",
+      "address": "Market Square (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 16,
+      "name": "Harvest Tea & Honey",
+      "category": "Food",
+      "subcategory": "Specialty Foods",
+      "description": "Loose-leaf teas, local-style honey gifts, and tasting flights.",
+      "address": "Lakeside (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Tea sampler discount."
+      ]
+    },
+    {
+      "id": 17,
+      "name": "Thread & Timber Boutique",
+      "category": "Retail",
+      "subcategory": "Clothing",
+      "description": "Casual clothing and accessories from small independent labels.",
+      "address": "North Village (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "10% off first purchase."
+      ]
+    },
+    {
+      "id": 18,
+      "name": "Second Story Apparel",
+      "category": "Retail",
+      "subcategory": "Clothing",
+      "description": "Curated secondhand clothing and vintage finds.",
+      "address": "Oak Commons (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 19,
+      "name": "Circuit Corner",
+      "category": "Retail",
+      "subcategory": "Electronics",
+      "description": "Headphones, chargers, computer accessories, and practical tech essentials.",
+      "address": "Maple District (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Bundle discount on laptop accessories."
+      ]
+    },
+    {
+      "id": 20,
+      "name": "Pixel Supply Co.",
+      "category": "Retail",
+      "subcategory": "Electronics",
+      "description": "Desk gadgets, cables, and mobile accessories.",
+      "address": "Cedar Park (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 21,
+      "name": "North Oak Furnishings",
+      "category": "Retail",
+      "subcategory": "Furniture",
+      "description": "Space-saving furniture, dining sets, and home-office essentials.",
+      "address": "West End (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 22,
+      "name": "ReMade Furniture Studio",
+      "category": "Retail",
+      "subcategory": "Furniture",
+      "description": "Restored vintage furniture and made-to-order shelving.",
+      "address": "Brookside (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Free local pickup on selected pieces."
+      ]
+    },
+    {
+      "id": 23,
+      "name": "Hearth & Home Shop",
+      "category": "Retail",
+      "subcategory": "Home Goods",
+      "description": "Kitchenware, candles, textiles, and storage solutions.",
+      "address": "Market Square (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Weekend home-organization promotion."
+      ]
+    },
+    {
+      "id": 24,
+      "name": "Bright Nest Décor",
+      "category": "Retail",
+      "subcategory": "Home Goods",
+      "description": "Decor accents, wall art, and small-space accessories.",
+      "address": "Lakeside (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 25,
+      "name": "Open Chapter Books",
+      "category": "Retail",
+      "subcategory": "Books",
+      "description": "New and used books, book clubs, and a welcoming reading nook.",
+      "address": "North Village (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Buy two used books, get one half off."
+      ]
+    },
+    {
+      "id": 26,
+      "name": "Little Lantern Bookshop",
+      "category": "Retail",
+      "subcategory": "Books",
+      "description": "Children’s books, graphic novels, and educational games.",
+      "address": "Oak Commons (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 27,
+      "name": "Kindred Gift House",
+      "category": "Retail",
+      "subcategory": "Gifts",
+      "description": "Handmade cards, locally inspired gifts, and custom gift baskets.",
+      "address": "Maple District (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 28,
+      "name": "Paper & Pine",
+      "category": "Retail",
+      "subcategory": "Gifts",
+      "description": "Stationery, journals, art prints, and thoughtful small gifts.",
+      "address": "Cedar Park (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Journal and pen bundle."
+      ]
+    },
+    {
+      "id": 29,
+      "name": "Trailhead Outfitters",
+      "category": "Retail",
+      "subcategory": "Sports & Outdoors",
+      "description": "Day-hiking accessories, running gear, and outdoor clothing.",
+      "address": "West End (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Seasonal trail gear sale."
+      ]
+    },
+    {
+      "id": 30,
+      "name": "Playmaker Sports",
+      "category": "Retail",
+      "subcategory": "Sports & Outdoors",
+      "description": "Equipment and accessories for neighborhood leagues and school teams.",
+      "address": "Brookside (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 31,
+      "name": "Petal & Stem",
+      "category": "Retail",
+      "subcategory": "Florists",
+      "description": "Fresh bouquets, plants, and arrangement workshops.",
+      "address": "Market Square (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 32,
+      "name": "Bloom Box Studio",
+      "category": "Retail",
+      "subcategory": "Florists",
+      "description": "Custom bouquets and compact indoor plant gifts.",
+      "address": "Lakeside (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Friday flower bundle."
+      ]
+    },
+    {
+      "id": 33,
+      "name": "Oakline Auto Care",
+      "category": "Service",
+      "subcategory": "Auto Services",
+      "description": "Routine maintenance, inspections, and car-care advice.",
+      "address": "North Village (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Oil-change appointment special."
+      ]
+    },
+    {
+      "id": 34,
+      "name": "Neighborhood Tire & Brake",
+      "category": "Service",
+      "subcategory": "Auto Services",
+      "description": "Tire checks, brake service, and seasonal vehicle maintenance.",
+      "address": "Oak Commons (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 35,
+      "name": "FixRight Home Services",
+      "category": "Service",
+      "subcategory": "Home Services",
+      "description": "Small household repairs, fixture installation, and maintenance visits.",
+      "address": "Maple District (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 36,
+      "name": "FreshStart Cleaning",
+      "category": "Service",
+      "subcategory": "Home Services",
+      "description": "Recurring and one-time residential cleaning services.",
+      "address": "Cedar Park (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "First-visit cleaning discount."
+      ]
+    },
+    {
+      "id": 37,
+      "name": "WellPath Family Clinic",
+      "category": "Service",
+      "subcategory": "Healthcare",
+      "description": "Example community clinic listing for primary-care appointments and wellness visits.",
+      "address": "West End (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 38,
+      "name": "ClearView Dental Care",
+      "category": "Service",
+      "subcategory": "Healthcare",
+      "description": "Example dental office listing for cleanings and preventive care.",
+      "address": "Brookside (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 39,
+      "name": "Root & Glow Salon",
+      "category": "Service",
+      "subcategory": "Beauty & Wellness",
+      "description": "Haircuts, styling, and color consultations.",
+      "address": "Market Square (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "New-client styling offer."
+      ]
+    },
+    {
+      "id": 40,
+      "name": "Calm Current Studio",
+      "category": "Service",
+      "subcategory": "Beauty & Wellness",
+      "description": "Massage and wellness services with scheduled sessions.",
+      "address": "Lakeside (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 41,
+      "name": "Move Together Fitness",
+      "category": "Service",
+      "subcategory": "Fitness",
+      "description": "Group classes, strength coaching, and beginner-friendly movement programs.",
+      "address": "North Village (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Free introductory class."
+      ]
+    },
+    {
+      "id": 42,
+      "name": "Neighborhood Yoga Room",
+      "category": "Service",
+      "subcategory": "Fitness",
+      "description": "Yoga, stretching, and guided recovery sessions.",
+      "address": "Oak Commons (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 43,
+      "name": "Restart Device Repair",
+      "category": "Service",
+      "subcategory": "Tech Repair",
+      "description": "Computer troubleshooting, phone repairs, and device setup help.",
+      "address": "Maple District (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 44,
+      "name": "Friendly IT Desk",
+      "category": "Service",
+      "subcategory": "Tech Repair",
+      "description": "Home Wi-Fi setup, laptop tune-ups, and technology assistance.",
+      "address": "Cedar Park (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Free initial consultation."
+      ]
+    },
+    {
+      "id": 45,
+      "name": "Paws & Play Grooming",
+      "category": "Service",
+      "subcategory": "Pet Care",
+      "description": "Pet bathing, grooming, and nail-trimming appointments.",
+      "address": "West End (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Puppy first-visit package."
+      ]
+    },
+    {
+      "id": 46,
+      "name": "Happy Tails Walking",
+      "category": "Service",
+      "subcategory": "Pet Care",
+      "description": "Scheduled dog walking and pet-sitting assistance.",
+      "address": "Brookside (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 47,
+      "name": "BrightBridge Learning",
+      "category": "Service",
+      "subcategory": "Tutoring",
+      "description": "One-on-one tutoring in math, reading, and study skills.",
+      "address": "Market Square (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
+    },
+    {
+      "id": 48,
+      "name": "NextStep Study Lab",
+      "category": "Service",
+      "subcategory": "Tutoring",
+      "description": "Homework support, exam preparation, and study-planning sessions.",
+      "address": "Lakeside (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Introductory tutoring session offer."
+      ]
+    },
+    {
+      "id": 49,
+      "name": "FreshFold Laundry",
+      "category": "Service",
+      "subcategory": "Laundry & Alterations",
+      "description": "Drop-off wash-and-fold service for busy households.",
+      "address": "North Village (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": [
+        "Weekday drop-off bundle."
+      ]
+    },
+    {
+      "id": 50,
+      "name": "Perfect Fit Alterations",
+      "category": "Service",
+      "subcategory": "Laundry & Alterations",
+      "description": "Clothing repairs, hemming, and basic tailoring.",
+      "address": "Oak Commons (fictional location)",
+      "rating": "0.0",
+      "reviewCount": 0,
+      "deals": []
     }
   ],
-  "reviews": []
+  "reviews": [],
+  "meta": {
+    "dataset": "Fictional sample listings for a college portfolio prototype. Not real local businesses.",
+    "updated": "2026-10-10",
+    "version": 2
+  }
 }

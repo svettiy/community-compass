@@ -29,15 +29,14 @@ export function renderList(items, openReviews, refreshUI, openEdit, openDelete) 
               <span class="badge bg-info text-dark">${escapeHTML(b.subcategory)}</span>
             </div>
             ${isAdmin ? `<div class="d-flex gap-1">
-              <button type="button" class="btn btn-sm btn-outline-secondary admin-edit-btn" title="Edit demo business"><i class="bi bi-pencil-square"></i></button>
-              <button type="button" class="btn btn-sm btn-outline-danger admin-delete-btn" title="Delete demo business"><i class="bi bi-trash-fill"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-secondary admin-edit-btn" title="Edit demo business"><i class="bi bi-pencil-square"></i> Edit</button>
+              <button type="button" class="btn btn-sm btn-outline-danger admin-delete-btn" title="Delete demo business"><i class="bi bi-trash-fill"></i> Delete</button>
             </div>` : ""}
           </div>
           <p class="mt-2 mb-2">${escapeHTML(b.description)}</p>
           ${b.address ? `<p class="small text-muted mb-2"><i class="bi bi-geo-alt"></i> ${escapeHTML(b.address)}</p>` : ""}
           ${deals.length ? `<div class="alert alert-warning py-1 px-2 mb-2 fw-bold"><i class="bi bi-tag-fill"></i> Special Deals <span class="badge bg-light text-dark ms-1">${deals.length}</span></div><ul class="small mb-2">${deals.map(d=>`<li>${escapeHTML(d)}</li>`).join("")}</ul>` : ""}
-          <p class="mb-1">⭐ ${escapeHTML(b.rating || "0.0")}
-            <span class="text-muted">(${escapeHTML(b.reviewCount || 0)} ratings)</span></p>
+          <p class="mb-1">${Number(b.reviewCount) > 0 ? `⭐ ${escapeHTML(b.rating || "0.0")} <span class="text-muted">(${escapeHTML(b.reviewCount)} sample ratings)</span>` : `<span class="text-muted small">No ratings yet (sample listing)</span>`}</p>
         </div>
         <div class="mt-2 d-flex justify-content-between align-items-center">
           <button type="button" class="btn btn-outline-primary btn-sm review-btn"><i class="fa fa-comment"></i> Reviews</button>

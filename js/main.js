@@ -40,6 +40,7 @@ function addDealRow(value = "") {
 }
 function openEditor(business = null) {
   if (!window.isAdmin) return;
+  if (!window.bootstrap?.Modal) { alert("Editor requires Bootstrap to load. Please check your internet connection and refresh."); return; }
   editingBusiness = business;
   el("adminBusinessModalTitle").textContent = business ? `Edit: ${business.name}` : "Add Business (local demo)";
   el("adminBizName").value = business?.name || "";
@@ -53,7 +54,8 @@ function openEditor(business = null) {
 function openEditBusiness(business) { openEditor(business); }
 async function openDeleteBusiness(business) {
   if (!window.isAdmin || !confirm(`Delete "${business.name}" from this browser's demo?`)) return;
-  try { await deleteBusiness(business.id); await reload(); }
+  try { await deleteBusiness(business.id); await reload();
+    el("editorStatus").textContent = `Deleted ${business.name} from this browser demo. Changes are not shared.`; }
   catch (error) { alert(error.message); }
 }
 async function saveEditedBusiness() {
@@ -69,6 +71,7 @@ async function saveEditedBusiness() {
     await saveBusiness(payload, editingBusiness?.id ?? null);
     await reload();
     window.bootstrap.Modal.getOrCreateInstance(el("adminBusinessModal")).hide();
+    el("editorStatus").textContent = `Saved ${payload.name} in this browser only. To publish permanent changes for all visitors, edit db.json in GitHub.`;
   } catch (error) { alert(error.message); }
 }
 function updateEditorButtons() {
@@ -76,6 +79,8 @@ function updateEditorButtons() {
   el("adminPanelBtn").classList.toggle("d-none", !window.isAdmin);
   el("adminLogoutBtn").classList.toggle("d-none", !window.isAdmin);
   el("adminLoginBtn").classList.toggle("d-none", window.isAdmin);
+  el("editorStatus").classList.toggle("d-none", !window.isAdmin);
+  if (window.isAdmin) el("editorStatus").innerHTML = "<strong>Demo Editor active.</strong> Select Edit or Delete on any card, or Add Business above. Your changes save only in this browser, not to the published db.json.";
   refreshUI();
 }
 function showError(error) {
@@ -101,7 +106,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   el("saveBusinessBtn").addEventListener("click", saveEditedBusiness);
   el("resetDemoBtn").addEventListener("click", async () => {
     if (!confirm("Reset local reviews and business edits to the original sample db.json?")) return;
-    try { await resetDemo(); await reload({preserveFilters:false}); el("searchInput").value = ""; el("viewFilter").value = "all"; refreshUI(); }
+    try { await resetDemo(); await reload({preserveFilters:false}); el("searchInput").value = ""; el("viewFilter").value = "all"; refreshUI();
+      if (window.isAdmin) el("editorStatus").textContent = "Local changes reset to the current public db.json sample data."; }
     catch (error) { alert(error.message); }
   });
 });

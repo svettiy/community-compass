@@ -20,7 +20,7 @@
         <i class="bi bi-pencil-square"></i> Demo Editor ON
       </span>
       <button id="adminLoginBtn" class="btn btn-outline-light btn-sm">
-        <i class="bi bi-pencil-square"></i> Try Demo Editor
+        <i class="bi bi-pencil-square"></i> Open Demo Editor
       </button>
       <button id="adminPanelBtn" class="btn btn-warning btn-sm ms-2 d-none">
         <i class="bi bi-plus-circle"></i> Add Business
@@ -33,12 +33,13 @@
 
   <div class="container mb-4">
     <div class="alert alert-info small" role="status">
-      <strong>Interactive portfolio prototype:</strong> listings are loaded from <code>db.json</code>.
+      <strong>Interactive portfolio prototype:</strong> <strong>All business names, locations, deals and ratings are sample data, not real businesses.</strong> Listings are loaded from <code>db.json</code>.
       Reviews, favorites, and changes made in Demo Editor are saved <strong>only in this browser</strong>,
-      not shared with other visitors. This is not a live public review service.
+      not shared with other visitors. This is not a live public review service or secure administrator system.
       <button type="button" id="resetDemoBtn" class="btn btn-sm btn-outline-primary ms-2">Reset local demo</button>
     </div>
     <div id="loadError" class="alert alert-danger d-none" role="alert"></div>
+    <div id="editorStatus" class="alert alert-warning small d-none" role="status" aria-live="polite">Demo Editor is active. Click <strong>Edit</strong> or <strong>Delete</strong> on a listing, or choose <strong>Add Business</strong>. Changes are saved only in this browser, not to the public GitHub site.</div>
 
     <div class="row g-3 mb-3">
       <div class="col-md-3">
@@ -117,7 +118,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body pt-3">
-          <p class="small text-muted">Edits here affect only your own browser. No login or permanent shared database is used.</p>
+          <p class="small text-muted">This is a local demonstration, not an authenticated admin console. Changes remain only in this browser. To change the public starter listings, edit db.json in GitHub.</p>
           <div class="mb-2">
             <label class="form-label fw-bold">Business Name</label>
             <input id="adminBizName" class="form-control" placeholder="Business Name" />

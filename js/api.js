@@ -1,99 +1,148 @@
-/* Community Compass static-site data adapter.
-   Initial records are read from db.json. Edits and reviews are LOCAL to this browser.
-   No password or secret is embedded in client-side JavaScript. */
-const STORAGE_KEY = "community-compass-demo-v1";
+/* Community Compass static-site adapter (GitHub Pages).
+   db.json is the public, read-only starter dataset.
+   User-added businesses, edits, removals, and reviews are stored as browser-local
+   OVERLAYS, rather than copying db.json into localStorage. This means publishing
+   new sample listings immediately updates even browsers with existing demo edits.
+   This is not server-side authentication or shared database persistence. */
+const STORAGE_KEY = "community-compass-demo-overrides-v2";
+const OLD_STORAGE_KEY = "community-compass-demo-v1";
 let statePromise;
 
-function save(state) {
+function emptyChanges() {
+  return { added: [], edited: [], removed: [], reviews: [] };
+}
+
+function readChanges() {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+    if (!saved || typeof saved !== "object") return emptyChanges();
+    return {
+      added: Array.isArray(saved.added) ? saved.added : [],
+      edited: Array.isArray(saved.edited) ? saved.edited : [],
+      removed: Array.isArray(saved.removed) ? saved.removed : [],
+      reviews: Array.isArray(saved.reviews) ? saved.reviews : []
+    };
   } catch (error) {
-    console.warn("Demo data could not be saved to this browser:", error);
-    throw new Error("Unable to save demo changes in this browser. Check storage settings.");
+    console.warn("Demo browser storage unavailable; starting fresh:", error);
+    return emptyChanges();
+  }
+}
+
+function saveChanges(state) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.changes));
+  } catch (error) {
+    console.warn("Unable to save demo changes:", error);
+    throw new Error("Cannot save browser-local changes. Check your browser storage settings.");
   }
 }
 
 async function initialize() {
-  const response = await fetch(new URL("../db.json", import.meta.url));
-  if (!response.ok) throw new Error(`Could not read db.json (${response.status}).`);
+  const response = await fetch(new URL("../db.json", import.meta.url), { cache: "no-cache" });
+  if (!response.ok) throw new Error(`Could not load db.json (${response.status}).`);
   const seed = await response.json();
   if (!Array.isArray(seed.businesses) || !Array.isArray(seed.reviews)) {
-    throw new Error("db.json must include businesses and reviews arrays.");
+    throw new Error("db.json requires businesses and reviews arrays.");
   }
-  try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-    if (saved && Array.isArray(saved.businesses) && Array.isArray(saved.reviews)) {
-      return saved;
-    }
-  } catch (error) {
-    console.warn("Ignoring invalid browser demo data:", error);
-  }
-  return { businesses: seed.businesses, reviews: seed.reviews };
+  return { seed, changes: readChanges() };
 }
-
 async function getState() {
-  if (!statePromise) statePromise = initialize().catch(error => {
-    statePromise = undefined;
-    throw error;
-  });
+  if (!statePromise) {
+    statePromise = initialize().catch(error => {
+      statePromise = undefined;
+      throw error;
+    });
+  }
   return statePromise;
+}
+function mergedBusinesses(state) {
+  const removed = new Set(state.changes.removed.map(String));
+  const edits = new Map(state.changes.edited.map(b => [String(b.id), b]));
+  const base = state.seed.businesses
+    .filter(b => !removed.has(String(b.id)))
+    .map(b => ({ ...b, ...(edits.get(String(b.id)) || {}) }));
+  const added = state.changes.added.filter(b => !removed.has(String(b.id)));
+  return [...base, ...added];
+}
+function updateBusiness(state, id, patch) {
+  const idx = state.changes.added.findIndex(b => String(b.id) === String(id));
+  if (idx !== -1) {
+    state.changes.added[idx] = { ...state.changes.added[idx], ...patch };
+    return;
+  }
+  const original = state.seed.businesses.find(b => String(b.id) === String(id));
+  if (!original || state.changes.removed.map(String).includes(String(id))) {
+    throw new Error("Business not found.");
+  }
+  const editIndex = state.changes.edited.findIndex(b => String(b.id) === String(id));
+  if (editIndex !== -1) {
+    state.changes.edited[editIndex] = { ...state.changes.edited[editIndex], ...patch, id };
+  } else {
+    state.changes.edited.push({ ...patch, id });
+  }
 }
 
 export async function loadBusinesses() {
-  const state = await getState();
-  return structuredClone(state.businesses);
+  return structuredClone(mergedBusinesses(await getState()));
 }
-
 export async function loadReviews(businessId) {
-  const state = await getState();
-  return structuredClone(state.reviews.filter(r => String(r.businessId) === String(businessId))
+  const { seed, changes } = await getState();
+  return structuredClone([...seed.reviews, ...changes.reviews]
+    .filter(r => String(r.businessId) === String(businessId))
     .sort((a, b) => new Date(b.created || 0) - new Date(a.created || 0)));
 }
-
 export async function postReview(review) {
   const state = await getState();
-  const business = state.businesses.find(b => String(b.id) === String(review.businessId));
+  const business = mergedBusinesses(state).find(b => String(b.id) === String(review.businessId));
   if (!business) throw new Error("Business not found.");
   const rating = Number(review.rating);
   if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
-    throw new Error("Rating must be 1–5.");
+    throw new Error("Rating must be between 1 and 5.");
   }
-  const nextReview = { ...review, rating, id: `review-${Date.now()}-${Math.random().toString(36).slice(2, 7)}` };
-  state.reviews.unshift(nextReview);
-  // Preserve the sample aggregate score/count for older reviews not present as text in db.json.
+  const nextReview = { ...review, rating, id: `demo-review-${Date.now()}-${Math.random().toString(36).slice(2, 9)}` };
   const count = Number(business.reviewCount) || 0;
-  const previousAverage = Number(business.rating) || 0;
-  business.rating = ((previousAverage * count + rating) / (count + 1)).toFixed(1);
-  business.reviewCount = count + 1;
-  save(state);
+  const average = Number(business.rating) || 0;
+  updateBusiness(state, business.id, {
+    rating: ((average * count + rating) / (count + 1)).toFixed(1),
+    reviewCount: count + 1
+  });
+  state.changes.reviews.unshift(nextReview);
+  saveChanges(state);
   return structuredClone(nextReview);
 }
-
 export async function saveBusiness(payload, id = null) {
   const state = await getState();
   if (id === null) {
-    const highest = state.businesses.reduce((n,b) => Math.max(n, Number(b.id)||0), 0);
-    const added = { id: highest + 1, address: "", rating: "0.0", reviewCount: 0, ...payload };
-    state.businesses.push(added);
-    save(state);
+    const added = {
+      id: `demo-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+      address: "Demo business (local only)", rating: "0.0", reviewCount: 0, ...payload
+    };
+    state.changes.added.push(added);
+    saveChanges(state);
     return structuredClone(added);
   }
-  const idx = state.businesses.findIndex(b => String(b.id) === String(id));
-  if (idx < 0) throw new Error("Business not found.");
-  state.businesses[idx] = { ...state.businesses[idx], ...payload };
-  save(state);
-  return structuredClone(state.businesses[idx]);
+  updateBusiness(state, id, payload);
+  saveChanges(state);
+  return structuredClone(mergedBusinesses(state).find(b => String(b.id) === String(id)));
 }
-
 export async function deleteBusiness(id) {
   const state = await getState();
-  state.businesses = state.businesses.filter(b => String(b.id) !== String(id));
-  state.reviews = state.reviews.filter(r => String(r.businessId) !== String(id));
-  save(state);
+  if (!mergedBusinesses(state).some(b => String(b.id) === String(id))) {
+    throw new Error("Business not found.");
+  }
+  state.changes.added = state.changes.added.filter(b => String(b.id) !== String(id));
+  state.changes.edited = state.changes.edited.filter(b => String(b.id) !== String(id));
+  if (!state.changes.removed.map(String).includes(String(id))) state.changes.removed.push(id);
+  state.changes.reviews = state.changes.reviews.filter(r => String(r.businessId) !== String(id));
+  saveChanges(state);
 }
-
 export async function resetDemo() {
-  localStorage.removeItem(STORAGE_KEY);
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(OLD_STORAGE_KEY);
+  } catch (error) {
+    throw new Error("Could not clear this browser's demo changes.");
+  }
   statePromise = undefined;
   return loadBusinesses();
 }
